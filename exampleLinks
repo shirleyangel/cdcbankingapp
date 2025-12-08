@@ -1,0 +1,87 @@
+1. Cafe Website Static HTML and CSS App: 
+
+https://github.com/sreepathysois/cafe-static-website.git
+https://github.com/sreepathysois/CafeStaticWebsite.git
+
+2. Static Websites templates Link
+https://html5up.net/
+https://freehtml5.co/
+
+3. Php Book alabum Static Website
+
+https://github.com/sreepathysois/basic-php-website-book-album.git
+
+4. Php Ecomemrce Dynamice Web App
+
+https://github.com/sreepathysois/phpmysql-app.git
+
+5. Cafe Dynamice Web application
+
+https://github.com/sreepathysois/Cafe_Dynamic_Website.git 
+
+6. JAVA JSP Web App
+https://github.com/sreepathysois/java-jsp-maven-webapp-ci-cd
+
+
+7. Java Maven App Link - Jenkins
+
+https://github.com/sreepathysois/simple-java-maven-app.git 
+
+sudo apt-get install xlstproc
+
+cd target
+
+sudo xsltproc -o ./surefire-reports/index.html ../sample.xsl  ./surefire-reports/*.xml
+
+Open file: sudo visudo
+
+Under sudo section add this line: 
+jenkins ALL=(ALL) NOPASSWD: ALL
+
+sudo usermod -aG sudo jenkins
+sudo systemctl restart jenkins
+
+8. Nodejs Monotoring App 
+
+https://github.com/sreepathysois/nodejs-monitoring-demoapp.git
+
+9. Python Monitoring App 
+https://github.com/sreepathysois/python-demoapp-monitoring
+
+10. Nodejs Docker volume
+
+https://github.com/sreepathysois/docker-volumes-nodejs-app.git
+
+11. Nodejs Jenkins App
+
+https://github.com/sreepathysois/node-jenkins-app-example.git
+
+12. Maven JSP Web app
+
+https://github.com/sreepathysois/MyMavenApp.git
+
+
+
+13. Wordpress App - Docker-Compose File + Kubernetes Deployment and Service Files 
+
+https://github.com/sreepathysois/Wordpress_Docker_Kubernetes.git 
+
+14. Ansible Playbook + Slave/Nodes Setup Procudure for Windows + Ubuntu Nodes
+
+https://github.com/sreepathysois/AnsibleWorkUpdated.git   
+
+
+15. Nodejs JenkinsFile/Groove Script Pipeline Project Example
+https://github.com/sreepathysois/nodejsdockerdemo.git
+
+
+16. Kubernetes Basic Commands Git Repo
+
+https://github.com/sreepathysois/KubernetesFundamentalsCommands.git
+
+17. Kubernetes End-to-End Prometheus Monitoring Stack
+
+https://github.com/sreepathysois/Prometheus_Monitoring_Stack_with_Kubernetes_Manifest_Files.git
+
+
+
