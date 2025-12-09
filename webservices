@@ -1,0 +1,137 @@
+//install JDK
+
+sudo apt update
+sudo apt install openjdk-8-jdk
+
+//Install IntelliJ IDEA Ultimate
+sudo snap install intellij-idea-ultimate --classic
+
+//OPEN intellij IDEA
+intellij-idea-ultimate
+
+//if you get to disable input methopds, click on it. 
+
+create new project give random name.
+
+//Check if Tomcat is available or not 
+sudo systemctl status tomcat //this should show status active, to exit from that. enter ctr+c
+
+//setting up tomcat in intellij
+go to file->settings->build,execution, deployment
+
+you get options like application servers. click on it. Click '+' and select 'Tomcat server' in the Tomcat home --- enter the path of tomcat "/opt/tomcat". 
+if it shows error/warning that 'tomcat home folder is not valid or similar', got to terminal, and change access to tomcat using,
+
+sudo chmod -R a+rX /opt/tomcat9
+
+//create a web application
+
+File-> New project -> (on the left side select Java Enterprise or Jarkata EE) under template select Web application , project name "calculator", App server -> Tomcat and create project.
+
+inside calculator->src->main->java->com.example.calculator, create new java class named OperatorService and add below code
+
+package com.example.calculator;
+
+import java.util.List;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+@WebService
+public class OperatorService {
+
+  @WebMethod
+  public int add(int a, int b) { return a + b; }
+
+  @WebMethod
+  public int sub(int a, int b) { return a - b; }
+
+  @WebMethod
+  public int mul(int a, int b) { return a * b; }
+
+  @WebMethod
+  public int div(int a, int b) { return a / b; }
+
+}
+
+inside calculator->src->main->java->com.example.calculator, create new java class named OperatorPublisher and add below code
+
+package com.example.calculator;
+
+import javax.xml.ws.Endpoint;
+
+public class OperatorPublisher {
+  public static void main(String[] args) {
+    String url = "http://localhost:8085/calculator";
+    Endpoint.publish(url, new OperatorService());
+    System.out.println("Service started at: " + url + "?wsdl");
+  }
+}
+
+
+in the File->Project Structure, click modules(on left side), under sources->language level it should be 8 - Lambdas, type annotations, etc. and under dependencies, Module SDK Should be Project SDK 1.8
+
+Also, under File->Settings->Build, Execution, DEployment -> compiler-> Java compiler, in Per-module bytecode version, select your module(for e.g calculator) and Target byte code should be 8
+
+Also, under File->Settings->Build, Execution, DEployment -> compiler-> Java compiler, under Build Tools-> Maven-> Runner, JRE should be Java 1.8
+
+now, got to pom.xml (it's below target in the left navigation), make sure that, 
+
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <junit.version>5.13.2</junit.version>
+</properties> 
+
+<dependency>
+    <groupId>jakarta.servlet</groupId>
+    <artifactId>jakarta.servlet-api</artifactId>
+    <version>4.0.4</version>
+    <scope>provided</scope>
+</dependency>
+
+are as above (check version)
+
+now right click to pom.xml and maven-> sync project.
+
+if HelloServlet.java is showing errors, make jarkata to javax in that file.
+
+now, build->rebuild project and run OperatorPublisher.
+
+you can access the page at  http://localhost:8085/calculator?wsdl
+
+//setting up client
+
+create new project(don't select Java Enterprise/ Jarkata JE), create normal Java project with name client and open it in new window.(don't terminate previous session)
+
+OPen new terminal and cd to IdeaProjects/client/src/ and run below command 
+
+wsimport -keep -p com.example.client http://localhost:8080/calculator?wsdl
+This generates proxy classes in com.example.client.
+
+
+create a file named TestOperatorClient  under com.example.client. and add below code
+
+package com.example.client;
+
+public class TestOperatorClient {
+  public static void main(String[] args) {
+    OperatorServiceService service = new OperatorServiceService();
+    OperatorService port = service.getOperatorServicePort();
+
+    System.out.println("Add: " + port.add(10, 5));
+    System.out.println("Sub: " + port.sub(10, 5));
+    System.out.println("Mul: " + port.mul(10, 5));
+    System.out.println("Div: " + port.div(10, 5));
+  }
+}
+
+run the file, you get the output as
+
+Add: 15
+Sub: 5
+Mul: 50
+Div: 2
+
+
+
