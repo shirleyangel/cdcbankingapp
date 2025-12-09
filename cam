@@ -1,5 +1,16 @@
-ISO image for TrueNas:
+// ISO image for TrueNas:
 https://download.freenas.org/13.3/STABLE/latest/x64/TrueNAS-13.3-U1.2.iso
+
+// TrueNas Terminal steps:
+cd /mnt
+ls
+cd nfs/
+sudo mkdir test
+ls
+//shirl test
+sudo mount -t nfs -o nfsvers=4 trunasIp:/mnt/pool1 /mnt/nfs/test
+df -h
+
 
 
 //  PASSWORDLESS n NFS
