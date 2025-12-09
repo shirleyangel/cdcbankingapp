@@ -1,2 +1,87 @@
-iso image
+ISO image for TrueNas:
 https://download.freenas.org/13.3/STABLE/latest/x64/TrueNAS-13.3-U1.2.iso
+
+
+//  PASSWORDLESS n NFS
+
+1. Achieving passwordless SSH connection to master and slave nodes
+
+*Master and slave nodes are identified and IP's are re-named accordingly.
+  172.18.181.65 master
+  172.18.181.61 slave1
+  172.18.181.53 slave2
+
+172.18.181.65 msis.kubenode1.com
+172.18.181.61 msis.kubemaster.com
+172.18.181.53 msis.kubenode2.com
+
+*Generating RSA key 
+ ssh-keygen -t rsa -b 4096
+Once the key is generated, copy or push it to slave noddes.
+ ssh-copy-id user@slave1
+ ssh-copy-id user@slave2
+Copies your public key (~/.ssh/id_rsa.pub) to the slave's ~/.ssh/authorized_keys.
+
+*Making sure that the SSH agent is running and the key is loaded
+ eval "$(ssh-agent -s)" --> Starts the agent
+ ssh-add ~/.ssh/id_rsa --> Adding private key to the agent
+
+*Giving the necessary permissions
+ chmod 600 ~/.ssh/id_rsa --> Private RSA key(Only accessible by owner)
+ chmod 644 ~/.ssh/id_rsa.pub --> Public RSA key(Shared to slaves ~/.ssh/authorized_keys)
+
+*RSA summarized steps
+ ssh-keygen           Creates your RSA key pair files
+ eval "$(ssh-agent -s)"   Starts the SSH agent process
+ ssh-add ~/.ssh/id_rsa    Loads your private key into agent
+
+*Use ssh-copy-id to push the public key to slave nodes
+ ssh-copy-id msis@slave1
+ ssh-copy-id msis@slave2
+Here msis is the usernames in slave1 and slave2.
+
+*Now SSH passwordless connection can be checked. 
+
+
+2. NFS setup
+
+1. Install NFS Packages on all nodes (master and slaves)
+sudo apt update
+sudo apt install nfs-kernel-server nfs-common -y
+nfs-kernel-server: Required only on the master (NFS server)
+nfs-common: Required on slaves (NFS clients)
+
+2.Create a Shared Directory on master
+sudo mkdir -p /nfs/shared
+sudo chmod 777 /nfs/shared
+
+3.Configure NFS Exports
+Edit the NFS exports file on the master
+sudo nano /etc/exports
+Add the following lines
+/nfs/shared 172.18.181.61(rw,sync,no_subtree_check)
+/nfs/shared 172.18.181.53(rw,sync,no_subtree_check)
+
+4. Export the Shared Directory
+Apply and verify the configuration
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
+sudo exportfs -v
+
+5. Mount the NFS Share on Slave Nodes
+On slave1
+sudo mkdir -p /nfs/shared
+sudo mount 172.18.181.65:/nfs/shared /nfs/shared
+On slave2
+sudo mkdir -p /nfs/shared
+sudo mount 172.18.181.65:/nfs/shared /nfs/shared
+
+6. Verify the Mount
+Run on any slave
+df -h | grep nfs
+Output would be  172.18.181.65:/nfs/shared   100G   2G   98G   2% /nfs/shared
+Test by creating a file from one slave and checking its visibility on others
+cd /nfs/shared
+touch testfile_from_slave1
+Check if it appears in /nfs/shared on master or slave2.
+
