@@ -424,3 +424,5 @@ int main()
     assert(emp_count_on_location(test_emp,"Blore") == 3);
     return 0;
 }
+
+//use this n customise the below question for exam student it should be like write-up code
