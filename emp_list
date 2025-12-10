@@ -1,0 +1,208 @@
+//list.h file
+#define NAME_SIZE 15
+#define DESIG_SIZE 20
+#define LOCATION_SIZE 20
+#define ACTIVE 1
+#define NOT_ON_ROLL -1
+#define INSERT_FAIL -1
+#define SUCCESS 1
+#define PROMOTED 1
+#define EMP_NOT_FOUND 0
+
+struct _employee_
+{
+    int emp_id;
+    char emp_name[NAME_SIZE];
+    float emp_sal;
+    char emp_desig[DESIG_SIZE];
+    char emp_location[LOCATION_SIZE];
+    int emp_status;
+};
+typedef struct _employee_ Emp;
+
+struct _employee_node_
+{
+    Emp data;
+    struct _employee_node_ *ptr;
+};
+
+typedef struct _employee_node_ Enode;
+
+struct _emp_linked_list_
+{
+    Enode *head, *tail;
+    int count;
+};
+typedef struct _emp_linked_list_ Emplist;
+
+Emplist * initialise_emp_list();
+int insert_employee(Emplist *,Emp emp_id);
+// return SUCCESS if promoted, id not present
+int give_promotion(Emplist *, int emp_id, char *desig);
+int give_bonus(Emplist *, float);
+int emp_count_on_location(Emplist *,char *location);
+int fire_employee(Emplist *, int emp_id);
+void emp_display(Emplist *);
+
+
+//list_op.c file
+#include<stdlib.h>
+#include<stdio.h>
+#include <string.h>
+#include "employee.h"
+#define IS_NULL(PTR) PTR == NULL
+#define ALLOC_FAIL NULL
+
+Emplist * initialise_emp_list()
+{
+    Emplist *emp;
+
+    emp = (Emplist *)malloc(sizeof(Emplist));
+    if(IS_NULL(emp)) return ALLOC_FAIL;
+
+    emp->head =emp->tail = NULL;
+    emp->count = 0;
+
+    return emp;
+}
+
+Enode * get_node_employee(Emp data)
+{
+    Enode *new_node;
+
+    new_node = (Enode *)malloc(sizeof(Enode));
+    if(new_node == NULL) return ALLOC_FAIL;
+
+    new_node->data = data;
+    new_node->ptr = NULL;
+    return new_node;
+}
+int insert_employee(Emplist *my_list, Emp emp_data)
+{
+    Enode *new_node = get_node_employee(emp_data);
+
+    if(new_node == NULL) return INSERT_FAIL;
+
+    if(my_list->head == NULL)
+        my_list->head = my_list->tail = new_node;
+    else{
+        new_node->ptr = my_list->head;
+        my_list->head = new_node;
+    }
+    my_list->count++;
+    return SUCCESS;
+}
+// return SUCCESS if promoted, id not present
+int give_promotion(Emplist *emp, int emp_id, char *desig)
+{
+    Enode *temp;
+
+    for(temp = emp->head; temp != NULL; temp = temp->ptr)
+    {
+        if((temp->data).emp_id == emp_id)
+        {
+            strcpy((temp->data).emp_desig, desig);
+            return PROMOTED;
+        }
+    }
+    return EMP_NOT_FOUND;
+}
+int give_bonus(Emplist *, float);
+int emp_count_on_location(Emplist *emp,char *location)
+{
+    Enode *temp;
+    int count = 0;
+    for(temp = emp->head; temp != NULL; temp = temp->ptr)
+    {
+        if(!strcmp((temp->data).emp_location,location))
+            count++;
+    }
+    return count;
+}
+int fire_employee(Emplist *, int emp_id);
+
+void emp_display(Emplist *emp)
+{
+    Enode *temp;
+
+    for(temp = emp->head; temp != NULL; temp = temp->ptr)
+    {
+        printf("\nEmployee id: %d\n Employee Name: %s\n Employee Designation %s\n\n", //
+               (temp->data).emp_id,//
+               (temp->data).emp_name,
+               (temp->data).emp_desig);
+    }
+}
+
+//main.c file
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include<assert.h>
+#include "employee.h"
+
+int main()
+{
+    Emplist *test_emp;
+    Emp emp_data;
+
+    test_emp = initialise_emp_list();
+    assert(test_emp->head == NULL);
+    assert(test_emp->tail == NULL);
+    assert(test_emp->count == 0);
+
+    emp_data.emp_id = 1001;
+    strcpy(emp_data.emp_name, "Raj");
+    strcpy(emp_data.emp_desig,"Developer");
+    strcpy(emp_data.emp_location, "Blore");
+    emp_data.emp_sal = 100000;
+    emp_data.emp_status = ACTIVE;
+
+    assert(insert_employee(test_emp, emp_data));
+
+    emp_data.emp_id = 1002;
+    strcpy(emp_data.emp_name, "Rajiv");
+    strcpy(emp_data.emp_desig,"Developer");
+    strcpy(emp_data.emp_location, "Blore");
+    emp_data.emp_sal = 10000;
+    emp_data.emp_status = ACTIVE;
+
+    assert(insert_employee(test_emp, emp_data));
+
+    emp_data.emp_id = 1003;
+    strcpy(emp_data.emp_name, "Rajani");
+    strcpy(emp_data.emp_desig,"Manager");
+    strcpy(emp_data.emp_location, "Chennai");
+    emp_data.emp_sal = 400000;
+    emp_data.emp_status = ACTIVE;
+
+    assert(insert_employee(test_emp, emp_data));
+
+    emp_data.emp_id = 1004;
+    strcpy(emp_data.emp_name, "Rajat");
+    strcpy(emp_data.emp_desig,"Developer");
+    strcpy(emp_data.emp_location, "Chennai");
+    emp_data.emp_sal = 100000;
+    emp_data.emp_status = ACTIVE;
+
+    assert(insert_employee(test_emp, emp_data));
+
+    emp_data.emp_id = 1005;
+    strcpy(emp_data.emp_name, "Raja");
+    strcpy(emp_data.emp_desig,"Manager");
+    strcpy(emp_data.emp_location, "Blore");
+    emp_data.emp_sal = 300000;
+    emp_data.emp_status = ACTIVE;
+
+    assert(insert_employee(test_emp, emp_data));
+
+    assert(test_emp->count == 5);
+    assert((test_emp->head->data).emp_id == 1005);
+
+    assert(give_promotion(test_emp,1004, "Sr. Developer"));
+    assert(!strcmp((test_emp->head->ptr->data).emp_desig, "Sr. Developer"));
+    emp_display(test_emp);
+
+    assert(emp_count_on_location(test_emp,"Blore") == 3);
+    return 0;
+}
