@@ -896,4 +896,4 @@ void test_occurence_element()
     assert(test == NULL);
 }
 
-//use this n customise the below question for exam student it should be like write-up code
+//use this n customise the below question for exam, it should be like student written code
