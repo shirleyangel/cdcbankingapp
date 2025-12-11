@@ -182,6 +182,210 @@ Broadcast message from root@localhost (Fri 2025-09-12 05:05:17 UTC):
 
 The system will power off now!
 
+viva
+ Here are **Cloud Foundation & Cloud Architecting Lab Viva Questions** — **short, neat, and exam-oriented**.
+
+---
+
+# ✅ **Cloud Foundation Viva Questions (Short)**
+
+### **1. What is Cloud Computing?**
+
+Delivery of computing services like **servers, storage, networking, databases, analytics** over the internet (*pay-as-you-go*).
+
+### **2. What are the Cloud Service Models?**
+
+* **IaaS** – Virtual servers, storage (e.g., EC2, EBS)
+* **PaaS** – Runtime, database platforms (e.g., Elastic Beanstalk)
+* **SaaS** – Ready-made applications (e.g., Gmail)
+
+### **3. What are the Cloud Deployment Models?**
+
+* **Public Cloud**
+* **Private Cloud**
+* **Hybrid Cloud**
+* **Community Cloud**
+
+### **4. What is Elasticity?**
+
+Ability of cloud resources to **automatically increase or decrease** based on workload.
+
+### **5. What is Scalability?**
+
+Ability to **manually or automatically** increase resources to handle growth.
+
+### **6. What is High Availability?**
+
+System remains **operational with minimal downtime** using multiple AZs/resources.
+
+### **7. What is Fault Tolerance?**
+
+System continues to work **even if components fail** (multi-AZ, multi-region).
+
+### **8. What is Auto Scaling?**
+
+Automatically **adds/removes EC2 instances** based on demand.
+
+### **9. What is a Region?**
+
+Geographical area containing multiple **Availability Zones**.
+
+### **10. What is an Availability Zone?**
+
+Group of **isolated data centres** within a region.
+
+### **11. What is VPC?**
+
+Virtual Private Cloud — **isolated** network to run cloud resources.
+
+### **12. What is a Subnet?**
+
+Subdivision inside VPC; **public** (internet-facing) or **private**.
+
+### **13. What is an Internet Gateway?**
+
+Allows resources inside VPC to **connect to the internet**.
+
+### **14. What is a NAT Gateway?**
+
+Allows **private subnet** instances to access the internet **securely**.
+
+### **15. What is IAM?**
+
+Identity & Access Management — **controls access** to AWS services.
+
+### **16. What is a Security Group?**
+
+Virtual **firewall** for instances (stateful).
+
+### **17. What is a NACL?**
+
+Network ACL — subnet-level firewall (stateless).
+
+### **18. What is S3?**
+
+Object storage with **11 9's durability**, supports versioning & lifecycle.
+
+### **19. What is CloudWatch?**
+
+Monitoring service for **logs, metrics, alarms**.
+
+### **20. What is CloudTrail?**
+
+Tracks **API calls** for auditing.
+
+---
+
+# ✅ **Architecting on Cloud Viva Questions**
+
+### **1. Principles of Cloud Architecture?**
+
+* **Scalability**
+* **Elasticity**
+* **Fault Tolerance**
+* **High Availability**
+* **Automation**
+* **Loose Coupling**
+* **Security**
+
+### **2. What is Well-Architected Framework?**
+
+5 Pillars:
+
+1. **Operational Excellence**
+2. **Security**
+3. **Reliability**
+4. **Performance Efficiency**
+5. **Cost Optimization**
+
+### **3. What is Load Balancer?**
+
+Distributes **incoming traffic** across multiple targets (ALB, NLB).
+
+### **4. How to design a Highly Available application?**
+
+* Use **multi-AZ** architecture
+* Use **Auto Scaling**
+* Use **Load Balancer**
+* Use **RDS Multi-AZ**
+
+### **5. What is a Stateless Application?**
+
+App does not store session data locally; allows **scaling** easily.
+
+### **6. What is Infrastructure as Code (IaC)?**
+
+Provisioning using code tools like **CloudFormation, Terraform**.
+
+### **7. Difference between Vertical & Horizontal Scaling?**
+
+* **Vertical:** Increase instance size.
+* **Horizontal:** Add more instances (preferred).
+
+### **8. What is RDS Multi-AZ?**
+
+Provides **high availability** by synchronously replicating data.
+
+### **9. What is a CDN?**
+
+Content Delivery Network — **delivers content faster** using edge locations (CloudFront).
+
+### **10. What is Serverless?**
+
+Services where you **don’t manage servers** (Lambda, DynamoDB, SQS).
+
+### **11. When to use SQS?**
+
+To decouple services using **message queues**.
+
+### **12. What is Cloud Architecture Diagram?**
+
+A design showing **compute, storage, networking, security, and data flow**.
+
+### **13. What is Disaster Recovery (DR)?**
+
+Strategy to recover services after failure.
+DR Types:
+
+* **Backup & Restore**
+* **Pilot Light**
+* **Warm Standby**
+* **Multi-Site**
+
+### **14. What is VPC Peering?**
+
+Connects **two VPCs** privately.
+
+### **15. What is Transit Gateway?**
+
+Connects **multiple VPCs and on-prem networks** centrally.
+
+### **16. What is Elastic Load Balancer Auto Scaling Architecture?**
+
+* **Users → Load Balancer → Auto Scaling Group → EC2 Instances**
+
+### **17. What is IAM Role?**
+
+Temporary access permissions for AWS services.
+
+### **18. What is Multi-Region Deployment?**
+
+Deploying app across regions for **global availability** and DR.
+
+### **19. What is Encryption at Rest & In Transit?**
+
+* **At Rest:** Using KMS keys to secure stored data.
+* **In Transit:** Using **TLS/HTTPS**.
+
+### **20. What is API Gateway?**
+
+Manages **REST APIs, throttling, caching, authentication**.
+
+---
+
+# ✅ Need **long answers**, **diagrams**, or **bold keywords** version?
+
+I can format it exactly how your exam needs.
 
 
 
