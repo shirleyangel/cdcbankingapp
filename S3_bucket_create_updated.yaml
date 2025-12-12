@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Cafe S3 template with public access using Bucket Policy"
+
+Resources:
+  CafeS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-cafe-website-bucket-msis
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+    DeletionPolicy: Retain
+
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt 
+      - CafeS3Bucket
+      - WebsiteURL
+    Description: URL for website hosted on S3
